@@ -220,15 +220,13 @@ var MOUNTAINS = [
     {name: "Denali", height: 6168, country: "United States"},
     {name: "Popocatepetl", height: 5465, country: "Mexico"}
   ];
-  function UnderlineCell(datas){
-    this.datas = datas;
+  function UnderlineCell(cell){
+    this.cell = cell;
+    this.width = cell.width;
 }
-UnderlineCell.prototype.draw = function(data){
-    var result = data.map(function(_,i){
-        return repeat('-',widthes(this.datas)[i]);
-    });
-    console.log(result);
+UnderlineCell.prototype.draw = function(){
+    console.log(this.cell.width);
+
 }
-var a = new UnderlineCell(breakData(MOUNTAINS));
-a.draw(['name','age','sex']);
+console.log(new UnderlineCell(new CommonCell(breakData(MOUNTAINS))).draw()) ;
 */
