@@ -144,89 +144,15 @@ function connect(a){
 /*
 7.输出结果
 */
-function outPut(datas){
+function outPut(Datas){
+    var datas = breakData(Datas);
     var commonArray = commonCell(datas);
     var underlineStr = underlineCell(commonArray[0],datas);
     var commonStr = connect(commonArray);
     return underlineStr + '\n' + commonStr;
 }
-
-
-
-
 /*
 最开始还有一些思路，但到了最后越来越不会写，看源码也有点晕，感觉很崩溃。。。
 最后按自己理解写完。。。感觉面向对象的应用好不熟练
 以后要多尝试一些高级语法😢
-*/
-
-
-
-
-
-/*疑问
-function CommonCell(datas){
-    this.datas = datas;
-    this.width = widthes(datas);
-}
-CommonCell.prototype.draw = function(){
-    var result = this.datas.map(function(row){
-        return row.map(function(cell,i){
-            if(typeof cell === 'number')
-                return repeat(' ',this.width[i] - String(cell).length) + String(cell);
-            else
-                return cell + repeat(' ',this.width[i] - cell.length);
-        });
-    });
-    return result;
-}
-function repeat(char,num){
-    var str = '';
-    for(var i = 0;i < num;i++){
-        str += char;
-    }
-    return str;
-}
-function widthes(datas){
-    var a = [];
-    for(var i = 0;i < datas[0].length;i++){
-        var max = 0;
-        for(var j = 0;j < datas.length;j++){
-            if(datas[j][i].length > max)
-                max = datas[j][i].length;
-        }
-        a.push(max);
-    }
-    return a;
-}
-function breakData(datas){
-    var keys = Object.keys(datas[0]);     //高级用法：Object.keys()
-    var headers = keys.map(function(i){
-        return i;
-    });
-    var bodies = datas.map(function(data){
-        return keys.map(function(i){
-            return data[i];
-        });
-    });
-    return [headers].concat(bodies);
-}
-var MOUNTAINS = [
-    {name: "Kilimanjaro", height: 5895, country: "Tanzania"},
-    {name: "Everest", height: 8848, country: "Nepal"},
-    {name: "Mount Fuji", height: 3776, country: "Japan"},
-    {name: "Mont Blanc", height: 4808, country: "Italy/France"},
-    {name: "Vaalserberg", height: 323, country: "Netherlands"},
-    {name: "Denali", height: 6168, country: "United States"},
-    {name: "Popocatepetl", height: 5465, country: "Mexico"}
-  ];
-  function UnderlineCell(cell){
-    this.cell = cell;
-    this.width = cell.width;
-}
-UnderlineCell.prototype.draw = function(){
-    console.log(this.cell.width);
-
-}
-console.log(new UnderlineCell(new CommonCell(breakData(MOUNTAINS))).draw()) ;
 */
