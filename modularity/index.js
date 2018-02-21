@@ -1,0 +1,1 @@
+document.write('webpack_first');
