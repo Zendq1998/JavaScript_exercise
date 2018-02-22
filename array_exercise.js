@@ -486,11 +486,130 @@ var rotate = function(matrix){
         }
     })
     return matrix;
+}
+/*27*/
+function check2(arr, n){
+    for(var i = 0; i <= n - 1; i++) {
+        if((Math.abs(arr[i] - arr[n]) == n - i) || (arr[i] == arr[n])) {
+            return false;
+        }
+    }
+    return true;
 };
-arr = [
-    [1,2,3,4],
-    [5,6,7,8],
-    [9,10,11,12],
-    [13,14,15,16]
-];
-rotate(arr)
+var arr = [];
+function backtrack(k,n){
+    if(k > n){
+        console.log(arr);
+    }
+    else{
+        for(var i = 1;i <= n; i++){
+            arr[k-1] = i;
+            if(check2(arr, k-1)){
+                backtrack(k + 1,n);
+            }
+        }
+    }
+}
+backtrack(1,8);
+/*28*/
+function check2(arr, n){
+    for(var i = 0; i <= n - 1; i++) {
+        if((Math.abs(arr[i] - arr[n]) == n - i) || (arr[i] == arr[n])) {
+            return false;
+        }
+    }
+    return true;
+};
+var arr = [],num = 0;
+function backtrack(k,n){
+    if(k > n){
+        num++;
+    }
+    else{
+        for(var i = 1;i <= n; i++){
+            arr[k-1] = i;
+            if(check2(arr, k-1)){
+                backtrack(k + 1,n);
+            }
+        }
+    }
+}
+backtrack(1,8);
+console.log(num)
+/*29
+运行正确*/
+const safeGet = (data, path) => {
+    var arr = path.split('.');
+    arr.map(function(i){
+        if(data === undefined)
+            return undefined;
+        data = data[i];
+    })
+    return data;
+}  
+/*30
+不会*/
+function before_through(board){
+    var a = [];
+    board.map(function(i){
+        var b = [];
+        [].slice.call(i).map(function(_,j){
+            b[j] = 0;
+        })
+        a.push(b);
+    })
+    return a;
+} 
+function search(board,word,j,isthrough){
+    var index = board[j].indexOf(word[0]);
+    besure++;
+    isthrough[j][index] = 1;
+    var left = [].slice.call(word).splice(0,1).join('');
+    left.map(function(i){
+        var before = besure;
+        while(1){
+            if(board[j][index + 1] === i && isthrough[j][index + 1] === 0){
+                index = index + 1;
+                besure++;
+            }   
+            else if(board[j][index - 1] === i && isthrough[j][index - 1] === 0){
+                index = index - 1;
+                besure++;
+            }
+            else if(board[j - 1][index] === i && isthrough[j - 1][index] === 0){
+                j = j - 1;
+                besure++;
+            }
+            else if(board[j + 1][index] === i && isthrough[j + 1][index] === 0){
+                j = j + 1;
+                besure++;
+            }
+            if(before - besure)
+                break;
+            else{
+
+            }
+            index = 0;
+        }
+    })
+}
+function isindex(board,word,isthrough){
+    var besure = 0;
+    board.map(function(i,j){
+        if(i.indexOf(word[0]) > -1)
+            search(board,word,j,isthrough)
+    })
+    return besure === word.length ? true : false;
+}
+var isthrough = before_through(board);
+isindex(board,word,isthrough);
+/*31
+运行正确*/
+const getPageTags = () => {
+    var doms = document.getElementsByTagName('*')//取得所有标签，doms是对象
+    var s = new Set([].slice.call(doms).map(dom => dom.tagName));//将doms分为一个对象数组，返回每个对象标签名称，将数组转化为集合，除去重复元素
+    return Array.from(s);//将集合转化为数组
+}
+
+  
+
