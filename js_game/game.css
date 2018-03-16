@@ -11,11 +11,11 @@
 .game{
     /*保留溢出值*/
     overflow : auto;
-    max-width : 2000px;
-    max-height : 1500px;
+    max-width : 1200px;
+    max-height : 800px;
     position : relative; 
 }
-/*玩家的CSS信息*/
+/*活动元素的CSS信息*/
 .actor{
     position : absolute;
 }

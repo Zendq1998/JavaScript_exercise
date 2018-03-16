@@ -56,7 +56,7 @@ Player.prototype.moveY = function(step, level, keys) {
     var obstacle = level.obstacleAt(newPos, this.size);
     if (obstacle) {
         level.playerTouched(obstacle);
-        //如果玩家在紧急情况下按下向上的键，玩家速度改变方向
+        //注意这里的下速度必须为0，否则有一个bug，玩家会贴墙走
         if (keys.up && this.speed.y > 0)
             this.speed.y = -jumpSpeed;
         else
@@ -151,60 +151,60 @@ var actorChars = {
 
 //用字符串数组存储地图
 var GAME_LEVELS = [
-    ["                                                                                ",
-     "                                                                                ",
-     "                                                                                ",
-     "                                                                                ",
-     "                                                                                ",
-     "                                                                                ",
-     "                                                                  xxx           ",
-     "                                                   xx      xx    xx!xx          ",
-     "                                    o o      xx                  x!!!x          ",
-     "                                                                 xx!xx          ",
-     "                                   xxxxx                          xvx           ",
-     "                                                                            xx  ",
-     "  xx                                      o o                                x  ",
-     "  x                     o                                                    x  ",
-     "  x                                      xxxxx                             o x  ",
-     "  x          xxxx       o                                                    x  ",
-     "  x  @       x  x                                                xxxxx       x  ",
-     "  xxxxxxxxxxxx  xxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxx     xxxxxxx   xxxxxxxxx  ",
-     "                              x   x                  x     x                    ",
-     "                              x!!!x                  x!!!!!x                    ",
-     "                              x!!!x                  x!!!!!x                    ",
-     "                              xxxxx                  xxxxxxx                    ",
-     "                                                                                ",
-     "                                                                                "],
-    ["                                      x!!x                        xxxxxxx                                    x!x  ",
-     "                                      x!!x                     xxxx     xxxx                                 x!x  ",
-     "                                      x!!xxxxxxxxxx           xx           xx                                x!x  ",
-     "                                      xx!!!!!!!!!!xx         xx             xx                               x!x  ",
-     "                                       xxxxxxxxxx!!x         x                                    o   o   o  x!x  ",
-     "                                                xx!x         x     o   o                                    xx!x  ",
-     "                                                 x!x         x                                xxxxxxxxxxxxxxx!!x  ",
-     "                                                 xvx         x     x   x                        !!!!!!!!!!!!!!xx  ",
-     "                                                             xx  |   |   |  xx            xxxxxxxxxxxxxxxxxxxxx   ",
-     "                                                              xx!!!!!!!!!!!xx            v                        ",
-     "                                                               xxxx!!!!!xxxx                                      ",
-     "                                               x     x            xxxxxxx        xxx         xxx                  ",
-     "                                               x     x                           x x         x x                  ",
-     "                                               x     x                             x         x                    ",
-     "                                               x     x                             xx        x                    ",
-     "                                               xx    x                             x         x                    ",
-     "                                               x     x      o  o     x   x         x         x                    ",
-     "               xxxxxxx        xxx   xxx        x     x               x   x         x         x                    ",
-     "              xx     xx         x   x          x     x     xxxxxx    x   x   xxxxxxxxx       x                    ",
-     "             xx       xx        x o x          x    xx               x   x   x               x                    ",
-     "     @       x         x        x   x          x     x               x   x   x               x                    ",
-     "    xxx      x         x        x   x          x     x               x   xxxxx   xxxxxx      x                    ",
-     "    x x      x         x       xx o xx         x     x               x     o     x x         x                    ",
-     "!!!!x x!!!!!!x         x!!!!!!xx     xx!!!!!!!!xx    x!!!!!!!!!!     x     =     x x         x                    ",
-     "!!!!x x!!!!!!x         x!!!!!xx       xxxxxxxxxx     x!!!!!!!xx!     xxxxxxxxxxxxx xx  o o  xx                    ",
-     "!!!!x x!!!!!!x         x!!!!!x    o                 xx!!!!!!xx !                    xx     xx                     ",
-     "!!!!x x!!!!!!x         x!!!!!x                     xx!!!!!!xx  !                     xxxxxxx                      ",
-     "!!!!x x!!!!!!x         x!!!!!xx       xxxxxxxxxxxxxx!!!!!!xx   !                                                  ",
-     "!!!!x x!!!!!!x         x!!!!!!xxxxxxxxx!!!!!!!!!!!!!!!!!!xx    !                                                  ",
-     "!!!!x x!!!!!!x         x!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!xx     !                                                  "],
+   ["                                                                                ",
+    "                                                                                ",
+    "                                                                                ",
+    "                                                                                ",
+    "                                                                                ",
+    "                                                                                ",
+    "                                                                  xxx           ",
+    "                                                   xx      xx    xx!xx          ",
+    "                                    o o      xx                  x!!!x          ",
+    "                                                                 xx!xx          ",
+    "                                   xxxxx                          xvx           ",
+    "                                                                            xx  ",
+    "  xx                                      o o                                x  ",
+    "  x                     o                                                    x  ",
+    "  x                                      xxxxx                             o x  ",
+    "  x          xxxx       o                                                    x  ",
+    "  x  @       x  x                                                xxxxx       x  ",
+    "  xxxxxxxxxxxx  xxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxx     xxxxxxx   xxxxxxxxx  ",
+    "                              x   x                  x     x                    ",
+    "                              x!!!x                  x!!!!!x                    ",
+    "                              x!!!x                  x!!!!!x                    ",
+    "                              xxxxx                  xxxxxxx                    ",
+    "                                                                                ",
+    "                                                                                "],
+   ["                                      x!!x                        xxxxxxx                                    x!x  ",
+    "                                      x!!x                     xxxx     xxxx                                 x!x  ",
+    "                                      x!!xxxxxxxxxx           xx           xx                                x!x  ",
+    "                                      xx!!!!!!!!!!xx         xx             xx                               x!x  ",
+    "                                       xxxxxxxxxx!!x         x                                    o   o   o  x!x  ",
+    "                                                xx!x         x     o   o                                    xx!x  ",
+    "                                                 x!x         x                                xxxxxxxxxxxxxxx!!x  ",
+    "                                                 xvx         x     x   x                        !!!!!!!!!!!!!!xx  ",
+    "                                                             xx  |   |   |  xx            xxxxxxxxxxxxxxxxxxxxx   ",
+    "                                                              xx!!!!!!!!!!!xx            v                        ",
+    "                                                               xxxx!!!!!xxxx                                      ",
+    "                                               x     x            xxxxxxx        xxx         xxx                  ",
+    "                                               x     x                           x x         x x                  ",
+    "                                               x     x                             x         x                    ",
+    "                                               x     x                             xx        x                    ",
+    "                                               xx    x                             x         x                    ",
+    "                                               x     x      o  o     x   x         x         x                    ",
+    "               xxxxxxx        xxx   xxx        x     x               x   x         x         x                    ",
+    "              xx     xx         x   x          x     x     xxxxxx    x   x   xxxxxxxxx       x                    ",
+    "             xx       xx        x o x          x    xx               x   x   x               x                    ",
+    "     @       x         x        x   x          x     x               x   x   x               x                    ",
+    "    xxx      x         x        x   x          x     x               x   xxxxx   xxxxxx      x                    ",
+    "    x x      x         x       xx o xx         x     x               x     o     x x         x                    ",
+    "!!!!x x!!!!!!x         x!!!!!!xx     xx!!!!!!!!xx    x!!!!!!!!!!     x     =     x x         x                    ",
+    "!!!!x x!!!!!!x         x!!!!!xx       xxxxxxxxxx     x!!!!!!!xx!     xxxxxxxxxxxxx xx  o o  xx                    ",
+    "!!!!x x!!!!!!x         x!!!!!x    o                 xx!!!!!!xx !                    xx     xx                     ",
+    "!!!!x x!!!!!!x         x!!!!!x                     xx!!!!!!xx  !                     xxxxxxx                      ",
+    "!!!!x x!!!!!!x         x!!!!!xx       xxxxxxxxxxxxxx!!!!!!xx   !                                                  ",
+    "!!!!x x!!!!!!x         x!!!!!!xxxxxxxxx!!!!!!!!!!!!!!!!!!xx    !                                                  ",
+    "!!!!x x!!!!!!x         x!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!xx     !                                                  "],
     ["                                                                                                              ",
      "                                                                                                              ",
      "                                                                                                              ",
@@ -462,8 +462,8 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
     //读取父级元素的内部宽度与高度(含内边距)
     var width = this.wrap.clientWidth;
     var height = this.wrap.clientHeight;
-    var wid = width / 3;
-    var hei = height / 3;
+    var wid = 0.4 * width;
+    var hei = 0.5 * height;
     // 读取滚动条到元素左边和上边的距离
     var left = this.wrap.scrollLeft, right = left + width;
     var top = this.wrap.scrollTop, bottom = top + height;
@@ -496,7 +496,7 @@ DOMDisplay.prototype.clear = function() {
 /*
 4.按键器的实现(不存在向下移动)
 */
-//定义按键值对象，被传入下面函数
+//定义按键值对象，被传入下面函数，即按键的Unicode值：
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
 function trackKeys(codes) {
     //创造空对象
@@ -545,6 +545,7 @@ function runLevel(level, Display, andThen) {
         level.animate(step, arrows);
         //绘制元素
         display.drawFrame();
+        //该地图结束，调用函数
         if (level.isFinished()) {
             display.clear();
             if(andThen)
@@ -555,11 +556,22 @@ function runLevel(level, Display, andThen) {
 }
 //封装函数，运行游戏
 function runGame(plans, Display) {
+    //注意之前无条件执行过一条命
+    var life = 2;
     function startLevel(n) {
-        scale = prompt("要放大一点吗?(建议10-20之间)");
+        //注意：document.write(),每输出一次就会刷新一次页面,无法正常使用
+        window.alert("Notice : 你现在有 " + (life + 1) + " 条命");
+        scale = prompt("要放大一点吗?(建议10-20之间)") || 10;
         runLevel(new Level(plans[n]), Display, function(status){
-            if (status == "lost")
-                startLevel(n);
+            console.log(1);
+            if (status == "lost"){
+                if(life-- > 0)
+                    startLevel(n);
+                else{
+                    life = 2;
+                    startLevel(0);
+                }
+            }
             else if (n < plans.length - 1)
                 startLevel(n + 1);
             else
