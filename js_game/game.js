@@ -246,7 +246,7 @@ var GAME_LEVELS = [
      "  x                                       x       |xxxx|    |xxxx|     xxx xxx                             x  ",
      "  x                xxx             o o    x                              x         xxx                     x  ",
      "  x               xxxxx       xx          x                             xxx       x!!!x          x         x  ",
-     "  x               oxxxo       x    xxx    x                             x x        xxx          xxx        x  ",
+     "  x               oxxxo       x           x                             x x        xxx          xxx        x  ",
      "  x                xxx        xxxxxxxxxxxxx  x oo x    x oo x    x oo  xx xx                    xxx        x  ",
      "  x      @          x         x           x!!x    x!!!!x    x!!!!x    xx   xx                    x         x  ",
      "  xxxxxxxxxxxxxxxxxxxxxxxxxxxxx           xxxxxxxxxxxxxxxxxxxxxxxxxxxxx     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  ",
@@ -513,9 +513,15 @@ function trackKeys(codes) {
             event.preventDefault();
         }   
     }   
+    //页面注销时，注销事件发生器，否则下个地图物体初始会运动，有bug
+    function logout(event){
+        pressed = Object.create(null);
+    }
     //如果按下键，触发回调函数
     addEventListener("keydown", handler);
     addEventListener("keyup", handler);
+    //页面注销时，注销事件发生器，不知道是否正确
+    addEventListener("beforeunload", logout);
     return pressed;
 }
 
@@ -535,11 +541,25 @@ function runAnimation(frameFunc) {
     //frame回调函数，参数是触发函数的当前时间
     requestAnimationFrame(frame);
 }
-//取得按键数组
-var arrows = trackKeys(arrowCodes);
 //封装函数
 function runLevel(level, Display, andThen) {
     var display = new Display(document.body, level);
+    //取得按键数组
+    var arrows = trackKeys(arrowCodes);
+    function pause(event){
+        if(event.keyCode == 27){
+            var yes = confirm("Continue?");
+            //如果不继续
+            if(!yes){
+                while(1){
+                    yes = confirm("Continue?"); 
+                    if(yes)
+                        break;
+                }
+            }
+        }
+    }
+    addEventListener("keydown", pause);
     runAnimation(function(step) {
         //移动元素
         level.animate(step, arrows);
@@ -560,8 +580,8 @@ function runGame(plans, Display) {
     var life = 2;
     function startLevel(n) {
         //注意：document.write(),每输出一次就会刷新一次页面,无法正常使用
-        window.alert("Notice : 你现在有 " + (life + 1) + " 条命");
         scale = prompt("要放大一点吗?(建议10-20之间)") || 10;
+        window.alert("Notice : 你现在有 " + (life + 1) + " 条命");
         runLevel(new Level(plans[n]), Display, function(status){
             console.log(1);
             if (status == "lost"){
