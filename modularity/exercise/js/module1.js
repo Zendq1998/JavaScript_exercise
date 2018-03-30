@@ -1,6 +1,9 @@
 // module1.js
-function output(a){
-    console.log('from module' + String(a));
+console.log(1);
+function obj(){};
+obj.prototype.output = function(){
+    console.log('Hello');
 }
-output(1);
-module.exports = output;
+console.log(3);
+var object1 = {'output':obj};
+module.exports = object1;

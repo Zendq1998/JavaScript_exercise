@@ -1,3 +1,4 @@
 // module2.js
-var output = require('./module1');
-output(2);
+var obj = require('./module1.js').output;
+var a = new obj();
+a.output();

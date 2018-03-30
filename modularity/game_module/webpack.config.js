@@ -1,7 +1,7 @@
 //引入html插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-    entry: "./src/game.js",
+    entry: "./src/gameDom.js",
     output: {
         path: __dirname + '/dist',
         filename: "game.js"

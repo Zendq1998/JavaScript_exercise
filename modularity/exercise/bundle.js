@@ -60,37 +60,41 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-// module1.js
-function output(a){
-    console.log('from module' + String(a));
-}
-output(1);
-module.exports = output;
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
-__webpack_require__(2);
+__webpack_require__(1);
 __webpack_require__(3);
 module.exports = __webpack_require__(4);
 
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // module2.js
-var output = __webpack_require__(0);
-output(2);
+var obj = __webpack_require__(2).output;
+var a = new obj();
+a.output();
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+// module1.js
+console.log(1);
+function obj(){};
+obj.prototype.output = function(){
+    console.log('Hello');
+}
+console.log(3);
+var object1 = {'output':obj};
+module.exports = object1;
 
 /***/ }),
 /* 3 */
