@@ -1,0 +1,46 @@
+/*整个地图的背景*/
+.background{
+    background : rgb(52,168,251);
+    border-spacing : 0;
+}
+/*地图内的元素内边距*/
+.background td{
+    padding : 0;
+}
+/*定义整个地图的CSS信息，同时以该地图左上角为定位，定义玩家(absolute)的滚动信息*/
+.game{
+    /*保留溢出值*/
+    overflow : auto;
+    max-width : 1200px;
+    max-height : 800px;
+    position : relative; 
+}
+/*活动元素的CSS信息*/
+.actor{
+    position : absolute;
+}
+/*初始玩家颜色*/
+.player{
+    background : rgb(64,64,64);
+}
+/*如果玩家失败(掉入熔浆)后的颜色*/
+.lost .player{
+    background :  rgb(160,64,64);
+}
+/*玩家胜利(取得所有硬币)后的颜色*/
+.won .player{
+    /*对左上角和右上角产生阴影效果*/
+    box-shadow : -40px -70px 180px 50px red, 40px, -70px, 180px, 50px green;
+} 
+/*熔浆的颜色*/
+.lava{
+    background : rgb(255,100,100);
+}
+/*墙*/
+.wall{
+    background : white;
+}
+/*硬币*/
+.coin{
+    background : rgb(241,229,89);
+}
