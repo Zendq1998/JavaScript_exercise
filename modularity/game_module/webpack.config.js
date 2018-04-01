@@ -7,6 +7,7 @@ module.exports = {
         filename: "game.js"
     },
     plugins: [new HtmlWebpackPlugin({//html插件配置
+        title: 'js_game',
         filename: 'game.html',
         template: './src/game.html',
         minify: {
