@@ -76,7 +76,7 @@ Orientation.prototype.getData = function(e){
 Orientation.prototype.oriListener = function(e) {
     setTimeout(function(){
         //deviceMotionHandler(e);
-        getData(e);
+        this.getData(e);
         this.player.act(0.1);
     },100);
 };
