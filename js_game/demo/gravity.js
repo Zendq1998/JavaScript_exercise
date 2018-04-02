@@ -32,7 +32,7 @@ drop.prototype.act = function(step){
 }
 
 //陀螺仪构造函数
-function Orientation(selector){}
+function Orientation(){}
 Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
     window.addEventListener('deviceorientation', this.oriListener, false);
