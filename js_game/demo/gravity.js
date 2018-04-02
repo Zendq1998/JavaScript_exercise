@@ -35,7 +35,9 @@ drop.prototype.act = function(step){
 function Orientation(){}
 Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
-    window.addEventListener('deviceorientation', this.oriListener, false);
+    if(window.deviceorientation)
+        alert("true")
+    window.addEventListener('deviceorientation', this.oriListener);
 }
 //获取数据
 Orientation.prototype.getData = function(e){
@@ -77,6 +79,7 @@ Orientation.prototype.getData = function(e){
 }*/
 //回调函数
 Orientation.prototype.oriListener = function(e) {
+    alert("!@#");
     setTimeout(function(){
         //deviceMotionHandler(e);
         this.getData(e);
