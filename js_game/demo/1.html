@@ -40,9 +40,8 @@
 <script>
     function Orientation(selector){}
     Orientation.prototype.init = function(){
-        window.addEventListener('deviceorientation', this.oriListener, false);
-        window.addEventListener('MozOrientation', this.oriListener, false); //为firefox所用
-        window.addEventListener('devicemotion', this.oriListener, false);   //重力感应
+        window.addEventListener('deviceorientation', this.oriListener);
+        
     }
 
     Orientation.prototype.oriListener = function(e) {
