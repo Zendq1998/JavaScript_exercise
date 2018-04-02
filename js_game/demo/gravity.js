@@ -50,13 +50,13 @@ Orientation.prototype.init = function(){
 //回调函数，不能调用自身函数(注意)
 Orientation.prototype.oriListener = function(e) {
         //deviceMotionHandler(e);
+        alert("Hello");
         getData(e);
         this.player.act(0.1);
         //获取数据
         function getData(e){
             //取得轴转角
             //大于0向下移动
-            alert("Hello");
             var a = e.beta || "1"
             alert(a);
             alert(e.gamma || "2");
