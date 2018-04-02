@@ -47,7 +47,7 @@
     Orientation.prototype.oriListener = function(e) {
         setTimeout(function(){
             handler(e);
-            deviceMotionHandler(e)
+           
         },10);
 
         function handler(e){
@@ -87,41 +87,6 @@
             }
         }
 
-        function deviceMotionHandler(e) {
-            /*
-            if(e.accelerationIncludingGravity){
-                var gx = e.accelerationIncludingGravity.x;
-                var gy = e.accelerationIncludingGravity.y;
-                var gz = e.accelerationIncludingGravity.z;
-            }
-             var facingUp = -1;
-             if (gz > 0) {
-             facingUp = +1;
-             }
-             var tiltLR = Math.round(((gx) / 9.81) * -90);
-             var tiltFB = Math.round(((gy + 9.81) / 9.81) * 90 * facingUp);
-
-             //document.getElementById("moCalcTiltLR").innerHTML = tiltLR;
-             // document.getElementById("moCalcTiltFB").innerHTML = tiltFB;
-
-             var rotation = "rotate(" + tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB) + "deg)";
-             document.getElementById("imgLogo").style.webkitTransform = rotation;
-           */
-
-            var gamma = e.gamma
-            var beta = e.beta
-            var alpha = e.alpha
-
-            var tiltLR =gamma; //Math.round(((beta) / 9) * -90);
-            var tiltFB = beta;
-
-            var rotation = "rotate(" + tiltLR + "deg)";
-            var rotation2 = "rotate(" + tiltFB + "deg)";
-            var style = document.querySelector("#imgLogo").style;
-            var style2 = document.querySelector("#imgLogo2").style;
-            style.webkitTransform = rotation;
-            style2.webkitTransform = rotation2;
-        }
     };
 
     (new Orientation()).init();
