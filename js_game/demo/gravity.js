@@ -32,9 +32,10 @@ drop.prototype.act = function(step){
 }
 
 //陀螺仪构造函数
-function Orientation(){}
-Orientation.prototype.init = function(){
+function Orientation(){
     this.player = new drop(new Vector(0, 0));
+}
+Orientation.prototype.init = function(){
     window.addEventListener('deviceorientation', this.oriListener);
 }
 
@@ -50,22 +51,16 @@ Orientation.prototype.init = function(){
 //回调函数，不能调用自身函数(注意)
 Orientation.prototype.oriListener = function(e) {
         //deviceMotionHandler(e);
-        alert("Hello");
         getData(e);
         this.player.act(0.1);
         //获取数据
         function getData(e){
             //取得轴转角
             //大于0向下移动
-            var a = e.beta || "1"
-            alert(a);
-            alert(e.gamma || "2");
             var beta = e.beta > 90 ? 90 : e.beta;
             var beta = e.beta < -90 ? -90 : e.beta;
             //大于0向右移动
             var gamma = e.gamma
-            alert(beta);
-            alert(gamma);
             //取得轴加速度
             /*if(e.accelerationIncludingGravity){
                 //手机竖起，即向下加速度
@@ -81,6 +76,8 @@ Orientation.prototype.oriListener = function(e) {
                 this.player.speed.x = tempox;
             if(tempoy - this.player.speed.y > 10)
                 this.player.speed.y = tempoy;
+            alert(this.player.speed.x);
+            alert(this.player.speed.y);
         }
 };
 
