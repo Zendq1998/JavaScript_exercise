@@ -37,36 +37,7 @@ Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
     window.addEventListener('deviceorientation', this.oriListener);
 }
-//获取数据
-Orientation.prototype.getData = function(e){
-    //取得轴转角
-    //大于0向下移动
-    alert("Hello");
-    var a = e.beta || "1"
-    alert(a);
-    alert(e.gamma || "2");
-    var beta = e.beta > 90 ? 90 : e.beta;
-    var beta = e.beta < -90 ? -90 : e.beta;
-    //大于0向右移动
-    var gamma = e.gamma
-    alert(beta);
-    alert(gamma);
-    //取得轴加速度
-    /*if(e.accelerationIncludingGravity){
-        //手机竖起，即向下加速度
-        beta = -e.accelerationIncludingGravity.y * 300
-        //手机右倾，即向右加速度
-        gamma = e.accelerationIncludingGravity.x * 300
-    }*/
 
-    //现在的速度，与之前的比较，确定玩家速度
-    var tempox = (gamma / 10).toFixed(2);
-    var tempoy = (beta / 10).toFixed(2);
-    if(tempox - this.player.speed.x > 10)
-        this.player.speed.x = tempox;
-    if(tempoy - this.player.speed.y > 10)
-        this.player.speed.y = tempoy;
-}
 //旋转图标(水滴)
 /*Orientation.prototype.rotation = function(e){
     function deviceMotionHandler(e) {
@@ -76,12 +47,41 @@ Orientation.prototype.getData = function(e){
         style.webkitTransform = rotation;
     }
 }*/
-//回调函数
+//回调函数，不能调用自身函数(注意)
 Orientation.prototype.oriListener = function(e) {
-    alert("H")
         //deviceMotionHandler(e);
-        this.getData(e);
+        getData(e);
         this.player.act(0.1);
+        //获取数据
+        function getData(e){
+            //取得轴转角
+            //大于0向下移动
+            alert("Hello");
+            var a = e.beta || "1"
+            alert(a);
+            alert(e.gamma || "2");
+            var beta = e.beta > 90 ? 90 : e.beta;
+            var beta = e.beta < -90 ? -90 : e.beta;
+            //大于0向右移动
+            var gamma = e.gamma
+            alert(beta);
+            alert(gamma);
+            //取得轴加速度
+            /*if(e.accelerationIncludingGravity){
+                //手机竖起，即向下加速度
+                beta = -e.accelerationIncludingGravity.y * 300
+                //手机右倾，即向右加速度
+                gamma = e.accelerationIncludingGravity.x * 300
+            }*/
+        
+            //现在的速度，与之前的比较，确定玩家速度
+            var tempox = (gamma / 10).toFixed(2);
+            var tempoy = (beta / 10).toFixed(2);
+            if(tempox - this.player.speed.x > 10)
+                this.player.speed.x = tempox;
+            if(tempoy - this.player.speed.y > 10)
+                this.player.speed.y = tempoy;
+        }
 };
 
 //实例创建
