@@ -35,7 +35,6 @@ drop.prototype.act = function(step){
 function Orientation(){}
 Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
-    this.getData();
     window.addEventListener('deviceorientation', this.oriListener, false);
 }
 //获取数据
