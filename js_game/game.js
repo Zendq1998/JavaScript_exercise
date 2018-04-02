@@ -42,7 +42,6 @@ Player.prototype.moveX = function(step, level, keys) {
         this.pos = newPos;
 };
 
-//这里的速度有点晕，感觉有歧义
 //定义重力
 var gravity = 30;
 //定义速度，注意这里的速度是减去重力后的速度
