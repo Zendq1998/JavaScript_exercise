@@ -41,15 +41,13 @@
         window.addEventListener('devicemotion', this.oriListener, false);   
     }
 
-    Orientation.prototype.oriListener = function(e) {
-        setTimeout(function(){
-            handler(e);
-            deviceMotionHandler(e)
-        },0);
+    Orientation.prototype.oriListener = function(e){
+        //deviceMotionHandler(e);
+        handler(e);
 
         function handler(e){
             //取得轴转角
-            //var alpha = e.alpha
+            var alpha = e.alpha
             var beta = e.beta
             var gamma = e.gamma
 
@@ -57,12 +55,12 @@
             if(e.accelerationIncludingGravity){
                 gamma = e.accelerationIncludingGravity.x * 300
                 beta = -e.accelerationIncludingGravity.y * 300
-                //alpha = e.accelerationIncludingGravity.z * 300
+                alpha = e.accelerationIncludingGravity.z * 300
             }
             //如果坐标改变
             if (this._lastGamma != gamma || this._lastBeta != beta) {
                 //写坐标
-                //document.querySelector("#msg").innerHTML = "x: "+ beta.toFixed(2) + " y: " + gamma.toFixed(2) + " z: " + (alpha != null ? alpha.toFixed(2) : 0)
+                document.querySelector("#msg").innerHTML = "x: "+ beta.toFixed(2) + " y: " + gamma.toFixed(2) + " z: " + (alpha != null ? alpha.toFixed(2) : 0)
                 //改变水滴坐标
                 var style = document.querySelector("#ball").style;
                 style.left = gamma/90 * 200 + 150 +"px";
@@ -73,13 +71,13 @@
             }
         }
         //旋转图标(水滴)
-        function deviceMotionHandler(e) {
+        /*function deviceMotionHandler(e) {
             var beta = e.beta
             var rotation = "rotate(" + beta + "deg)";
             var style = document.querySelector("#imgLogo").style;
             style.webkitTransform = rotation;
-        }
-    };
+        }*/
+    }
     //实例
     (new Orientation()).init();
 </script>
