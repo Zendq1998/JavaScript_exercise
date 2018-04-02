@@ -35,18 +35,21 @@ drop.prototype.act = function(step){
 function Orientation(){}
 Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
+    this.getData();
     window.addEventListener('deviceorientation', this.oriListener, false);
 }
 //获取数据
 Orientation.prototype.getData = function(e){
     //取得轴转角
     //大于0向下移动
+    alert(e.beta);
+    alert(e.gamma);
     var beta = e.beta > 90 ? 90 : e.beta;
     var beta = e.beta < -90 ? -90 : e.beta;
     //大于0向右移动
     var gamma = e.gamma
-    alert("fine");
-    alert(beta, gamma);
+    alert(beta);
+    alert(gamma);
     //取得轴加速度
     /*if(e.accelerationIncludingGravity){
         //手机竖起，即向下加速度
