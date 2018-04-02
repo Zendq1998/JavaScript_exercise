@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">  
+    <style>
+        .test{
+            border:2px solid green;
+            width:300px;
+            height:350px;
+            background: #000;
+            position: relative;
+            COLOR:#FFF;
+        }
+        .test #ball{
+            width:12px;
+            height:12px;
+            background: #fff;
+            -webkit-border-radius:6px;
+            position: absolute;
+            left:0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>设备方向感应测试</h2>
+<div id="msg"></div>
+
+<div id='test' tabindex='0' class="test">
+    <div id="ball"></div>
+</div>
+<script>
+    function Orientation(selector){}
+    Orientation.prototype.init = function(){
+        window.addEventListener('deviceorientation', this.oriListener, false);
+        window.addEventListener('devicemotion', this.oriListener, false);   //重力感应
+    }
+
+    Orientation.prototype.oriListener = function(e) {
+        setTimeout(function(){
+            handler(e);
+            deviceMotionHandler(e)
+        },10);
+
+        function handler(e){
+            //取得轴转角
+            var alpha = e.alpha
+            var beta = e.beta
+            var gamma = e.gamma
+            //取得轴加速度
+            if(e.accelerationIncludingGravity){
+                gamma = e.accelerationIncludingGravity.x * 300
+                beta = -e.accelerationIncludingGravity.y * 300
+                alpha = e.accelerationIncludingGravity.z * 300
+            }
+
+            if (this._lastGamma != gamma || this._lastBeta != beta) {
+                //写坐标
+                document.querySelector("#msg").innerHTML = "x: "+ beta.toFixed(2) + " y: " + gamma.toFixed(2) + " z: " + (alpha != null ? alpha.toFixed(2) : 0)
+                //改变小球坐标
+                var style = document.querySelector("#ball").style;
+                style.left = gamma/90 * 200 + 150 +"px";
+                style.top = beta/90 * 200 + 100 +"px";
+                //重新计算小球转角
+                this._lastBeta = beta;
+                this._lastGamma = gamma;
+            }
+        }
+
+        function deviceMotionHandler(e) {
+
+            var gamma = e.gamma
+            var beta = e.beta
+            var alpha = e.alpha
+
+            var tiltLR =gamma; //Math.round(((beta) / 9) * -90);
+            var tiltFB = beta;
+
+            var rotation = "rotate(" + tiltLR + "deg)";
+            var rotation2 = "rotate(" + tiltFB + "deg)";
+            var style = document.querySelector("#imgLogo").style;
+            var style2 = document.querySelector("#imgLogo2").style;
+            style.webkitTransform = rotation;
+            style2.webkitTransform = rotation2;
+        }
+    };
+
+    (new Orientation()).init();
+</script>
+</body>
+</html>
