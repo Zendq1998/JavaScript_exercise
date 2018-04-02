@@ -38,7 +38,7 @@
     function Orientation(selector){}
     Orientation.prototype.init = function(){
         window.addEventListener('deviceorientation', this.oriListener, false);
-        window.addEventListener('devicemotion', this.oriListener, false);   //重力感应
+        window.addEventListener('devicemotion', this.oriListener, false);   
     }
 
     Orientation.prototype.oriListener = function(e) {
@@ -49,47 +49,38 @@
 
         function handler(e){
             //取得轴转角
-            var alpha = e.alpha
+            //var alpha = e.alpha
             var beta = e.beta
             var gamma = e.gamma
+
             //取得轴加速度
             if(e.accelerationIncludingGravity){
                 gamma = e.accelerationIncludingGravity.x * 300
                 beta = -e.accelerationIncludingGravity.y * 300
-                alpha = e.accelerationIncludingGravity.z * 300
+                //alpha = e.accelerationIncludingGravity.z * 300
             }
-
+            //如果坐标改变
             if (this._lastGamma != gamma || this._lastBeta != beta) {
                 //写坐标
-                document.querySelector("#msg").innerHTML = "x: "+ beta.toFixed(2) + " y: " + gamma.toFixed(2) + " z: " + (alpha != null ? alpha.toFixed(2) : 0)
-                //改变小球坐标
+                //document.querySelector("#msg").innerHTML = "x: "+ beta.toFixed(2) + " y: " + gamma.toFixed(2) + " z: " + (alpha != null ? alpha.toFixed(2) : 0)
+                //改变水滴坐标
                 var style = document.querySelector("#ball").style;
                 style.left = gamma/90 * 200 + 150 +"px";
                 style.top = beta/90 * 200 + 100 +"px";
-                //重新计算小球转角
+                //重新计算水滴转角
                 this._lastBeta = beta;
                 this._lastGamma = gamma;
             }
         }
-
+        //旋转图标(水滴)
         function deviceMotionHandler(e) {
-
-            var gamma = e.gamma
             var beta = e.beta
-            var alpha = e.alpha
-
-            var tiltLR =gamma; //Math.round(((beta) / 9) * -90);
-            var tiltFB = beta;
-
-            var rotation = "rotate(" + tiltLR + "deg)";
-            var rotation2 = "rotate(" + tiltFB + "deg)";
+            var rotation = "rotate(" + beta + "deg)";
             var style = document.querySelector("#imgLogo").style;
-            var style2 = document.querySelector("#imgLogo2").style;
             style.webkitTransform = rotation;
-            style2.webkitTransform = rotation2;
         }
     };
-
+    //实例
     (new Orientation()).init();
 </script>
 </body>
