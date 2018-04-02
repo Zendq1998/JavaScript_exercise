@@ -46,7 +46,7 @@ Orientation.prototype.getData = function(e){
     var beta = e.beta < -90 ? -90 : e.beta;
     //大于0向右移动
     var gamma = e.gamma
-
+    alert(beta, gamma);
     //取得轴加速度
     /*if(e.accelerationIncludingGravity){
         //手机竖起，即向下加速度
