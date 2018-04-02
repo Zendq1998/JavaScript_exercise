@@ -42,8 +42,12 @@
     }
 
     Orientation.prototype.oriListener = function(e){
-        //deviceMotionHandler(e);
-        handler(e);
+        //先加载变量
+        setTimeout(function(){
+            //deviceMotionHandler(e);
+            handler(e);
+        },1);
+
 
         function handler(e){
             //取得轴转角
@@ -76,7 +80,7 @@
             var rotation = "rotate(" + beta + "deg)";
             var style = document.querySelector("#imgLogo").style;
             style.webkitTransform = rotation;
-        }*/
+        }
     }
     //实例
     (new Orientation()).init();
