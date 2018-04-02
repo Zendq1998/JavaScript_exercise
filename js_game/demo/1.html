@@ -16,11 +16,13 @@
         window.addEventListener('deviceorientation', this.oriListener);
         
     }
-
+    Orientation.prototype.handler = function(){
+        alter("HELLO");
+    }
     Orientation.prototype.oriListener = function(e) {
-        alert(1);
+        this.handler();
         /*setTimeout(function(){
-            handler(e);
+            
            
         },10);
 
