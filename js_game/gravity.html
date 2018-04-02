@@ -43,8 +43,10 @@
 
     Orientation.prototype.oriListener = function(e){
         //先加载变量
+        setTimeout(function(){
             //deviceMotionHandler(e);
             handler(e);
+        },1);
 
 
         function handler(e){
