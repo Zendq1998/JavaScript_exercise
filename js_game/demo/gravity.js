@@ -37,6 +37,7 @@ Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
     window.addEventListener('deviceorientation', this.oriListener, false);
     window.addEventListener('devicemotion', this.oriListener, false);   
+    alert("Hello");
 }
 //获取数据
 Orientation.prototype.getData = function(e){
