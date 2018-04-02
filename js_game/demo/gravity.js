@@ -42,8 +42,9 @@ Orientation.prototype.init = function(){
 Orientation.prototype.getData = function(e){
     //取得轴转角
     //大于0向下移动
-    alert(e.beta);
-    alert(e.gamma);
+    var a = e.beta || "1"
+    alert(a);
+    alert(e.gamma || "2");
     var beta = e.beta > 90 ? 90 : e.beta;
     var beta = e.beta < -90 ? -90 : e.beta;
     //大于0向右移动
