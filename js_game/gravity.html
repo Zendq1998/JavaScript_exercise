@@ -56,7 +56,7 @@
             if(e.accelerationIncludingGravity){
                 gamma = e.accelerationIncludingGravity.x * 300
                 beta = -e.accelerationIncludingGravity.y * 300
-                alpha = event.accelerationIncludingGravity.z * 300
+                alpha = e.accelerationIncludingGravity.z * 300
             }
 
             if (this._lastGamma != gamma || this._lastBeta != beta) {
