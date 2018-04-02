@@ -36,8 +36,6 @@ function Orientation(){}
 Orientation.prototype.init = function(){
     this.player = new drop(new Vector(0, 0));
     window.addEventListener('deviceorientation', this.oriListener, false);
-    window.addEventListener('devicemotion', this.oriListener, false);   
-    alert("Hello");
 }
 //获取数据
 Orientation.prototype.getData = function(e){
@@ -47,6 +45,7 @@ Orientation.prototype.getData = function(e){
     var beta = e.beta < -90 ? -90 : e.beta;
     //大于0向右移动
     var gamma = e.gamma
+    alert("fine");
     alert(beta, gamma);
     //取得轴加速度
     /*if(e.accelerationIncludingGravity){
