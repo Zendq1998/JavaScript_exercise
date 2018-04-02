@@ -78,11 +78,7 @@ Orientation.prototype.getData = function(e){
 //回调函数
 Orientation.prototype.oriListener = function(e) {
     alert("!@#");
-    setTimeout(function(){
-        //deviceMotionHandler(e);
-        this.getData(e);
-        this.player.act(0.1);
-    },100);
+    
 };
 
 //实例创建
