@@ -7,7 +7,7 @@ div{
 }
 .contain{
 	border: 4px solid #DEB887;
-	width: 100%;
+	width: 500px;
 	height: 500px;
 	background-color: grey;
 	position: relative;

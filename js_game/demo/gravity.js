@@ -25,11 +25,10 @@ drop.prototype.act = function(frameFunc) {
         if (lastTime != null) {
             //求间隔
             var timeStep = Math.min(time - lastTime, 100) / 1000;
-            stop = frameFunc(timeStep) === false;
+            frameFunc(timeStep)
         }
         lastTime = time;
-        if (!stop)
-            requestAnimationFrame(frame);
+        requestAnimationFrame(frame);
     }
     //frame回调函数，参数是触发函数的当前时间
     requestAnimationFrame(frame);
@@ -56,7 +55,22 @@ Orientation.prototype.init = function(){
 Orientation.prototype.oriListener = function(e) {
         //deviceMotionHandler(e);
         getData(e);
-        
+        this.player.act(function(step){
+            //设置最大时间间隔
+            var maxStep = 0.05;
+            while (step > 0) {
+                var thisStep = Math.min(step, maxStep);
+                //玩家移动
+                var tempos = this.player.pos + this.player.speed.times(thisStep);
+                tempos.x = tempos.x > 486 ? 486 :  tempos.x;
+                tempos.y = tempos.y > 486 ? 486 :  tempos.y;
+                this.player.pos = tempos;
+                var style = document.querySelector("#ball");
+                style.left = tempos.x;
+                style.top = tempos.y;
+                step -= thisStep;
+            }
+        });
         //获取数据
         function getData(e){
             //取得轴转角
