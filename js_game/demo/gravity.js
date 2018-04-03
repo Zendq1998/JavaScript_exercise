@@ -76,7 +76,7 @@ Orientation.prototype.oriListener = function(e) {
                 this.player.speed.x = tempox;
             if(tempoy - this.player.speed.y > 10)
                 this.player.speed.y = tempoy;
-            alert(this.player.speed.x);
+            alert("Hello");
             alert(this.player.speed.y);
         }
 };
