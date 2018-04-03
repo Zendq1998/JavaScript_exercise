@@ -18,22 +18,26 @@ function drop(pos){
     this.speed = new Vector(0, 0);
 }
 //水滴移动方法
-drop.prototype.act = function(step){
-    var newPos = this.pos.plus(this.speed.times(step));
-     //改变水滴坐标
-    if(newPos.x <= 290)
-        this.pos.x = newPos.x
-    if(newPos.y <= 340)
-        this.pos.y = newPos.y
-    //显示水滴新位置
-    var style = document.querySelector("#ball").style;
-    style.left = this.pos.x + "px";
-    style.top = this.pos.y + "px";
+drop.prototype.act = function(frameFunc) {
+    var lastTime = null;
+    function frame(time) {
+        var stop = false;
+        if (lastTime != null) {
+            //求间隔
+            var timeStep = Math.min(time - lastTime, 100) / 1000;
+            stop = frameFunc(timeStep) === false;
+        }
+        lastTime = time;
+        if (!stop)
+            requestAnimationFrame(frame);
+    }
+    //frame回调函数，参数是触发函数的当前时间
+    requestAnimationFrame(frame);
 }
-
 //陀螺仪构造函数
 function Orientation(){
     this.player = new drop(new Vector(0, 0));
+    alert(this.player.speed)
 }
 Orientation.prototype.init = function(){
     window.addEventListener('deviceorientation', this.oriListener);
@@ -52,7 +56,7 @@ Orientation.prototype.init = function(){
 Orientation.prototype.oriListener = function(e) {
         //deviceMotionHandler(e);
         getData(e);
-        this.player.act(0.1);
+        
         //获取数据
         function getData(e){
             //取得轴转角
