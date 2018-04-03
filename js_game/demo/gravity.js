@@ -85,7 +85,7 @@ function oriListener(e) {
         while (step > 0) {
             var thisStep = Math.min(step, maxStep);
             //玩家移动
-            var tempos = player.pos.plus(player.speed.times(thisStep));
+            var tempos = player.pos.plus(player.speed.times(thisStep * 0.1));
             if(tempos.x > 0)
                 tempos.x = tempos.x > 486 ? 486 :  tempos.x;
             else
