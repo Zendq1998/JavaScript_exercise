@@ -55,7 +55,6 @@ Orientation.prototype.oriListener = function(e) {
         this.player.act(0.1);
         //获取数据
         function getData(e){
-            alert("Hello");
             //取得轴转角
             //大于0向下移动
             var beta = e.beta > 90 ? 90 : e.beta;
@@ -70,14 +69,11 @@ Orientation.prototype.oriListener = function(e) {
                 gamma = e.accelerationIncludingGravity.x * 300
             }*/
         
-            //现在的速度，与之前的比较，确定玩家速度
+            //根据现在的速度，确定玩家速度
             var tempox = (gamma / 10).toFixed(2);
             var tempoy = (beta / 10).toFixed(2);
-            if(tempox - this.player.speed.x > 10)
-                this.player.speed.x = tempox;
-            if(tempoy - this.player.speed.y > 10)
-                this.player.speed.y = tempoy;
-            
+            this.player.speed = new Vector(tempox, tempoy);
+            alert("Hello");
             alert(this.player.speed.y);
         }
 };
