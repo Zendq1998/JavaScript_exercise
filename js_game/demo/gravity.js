@@ -55,6 +55,7 @@ Orientation.prototype.oriListener = function(e) {
         this.player.act(0.1);
         //获取数据
         function getData(e){
+            alert("Hello");
             //取得轴转角
             //大于0向下移动
             var beta = e.beta > 90 ? 90 : e.beta;
@@ -76,7 +77,7 @@ Orientation.prototype.oriListener = function(e) {
                 this.player.speed.x = tempox;
             if(tempoy - this.player.speed.y > 10)
                 this.player.speed.y = tempoy;
-            alert("Hello");
+            
             alert(this.player.speed.y);
         }
 };
