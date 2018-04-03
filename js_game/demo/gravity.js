@@ -21,7 +21,6 @@ function drop(pos){
 drop.prototype.act = function(frameFunc) {
     var lastTime = null;
     function frame(time) {
-        var stop = false;
         if (lastTime != null) {
             //求间隔
             var timeStep = Math.min(time - lastTime, 100) / 1000;
@@ -33,13 +32,13 @@ drop.prototype.act = function(frameFunc) {
     //frame回调函数，参数是触发函数的当前时间
     requestAnimationFrame(frame);
 }
+//创建玩家
+var player = new drop(new Vector(0, 0));
+
 //陀螺仪构造函数
-function Orientation(){
-    this.player = new drop(new Vector(0, 0));
-    alert(this.player.speed)
-}
+function Orientation(){}
 Orientation.prototype.init = function(){
-    window.addEventListener('deviceorientation', this.oriListener);
+    window.addEventListener('deviceorientation', oriListener);
 }
 
 //旋转图标(水滴)
@@ -51,49 +50,58 @@ Orientation.prototype.init = function(){
         style.webkitTransform = rotation;
     }
 }*/
-//回调函数，不能调用自身函数(注意)
-Orientation.prototype.oriListener = function(e) {
-        //deviceMotionHandler(e);
-        getData(e);
-        this.player.act(function(step){
-            //设置最大时间间隔
-            var maxStep = 0.05;
-            while (step > 0) {
-                var thisStep = Math.min(step, maxStep);
-                //玩家移动
-                var tempos = this.player.pos + this.player.speed.times(thisStep);
+//回调函数，不能调用自身函数和属性(注意)
+function oriListener(e) {
+
+    //获取数据
+    (function(e){
+        //取得轴转角
+        //大于0向下移动
+        var beta;
+        if(e.beta > 0)
+            beta = e.beta > 90 ? 90 : e.beta;
+        else
+            beta = e.beta < -90 ? -90 : e.beta;
+        //大于0向右移动
+        var gamma = e.gamma
+        //取得轴加速度
+        /*if(e.accelerationIncludingGravity){
+            //手机竖起，即向下加速度
+            beta = -e.accelerationIncludingGravity.y * 300
+            //手机右倾，即向右加速度
+            gamma = e.accelerationIncludingGravity.x * 300
+        }*/
+    
+        //根据转角，确定玩家斜坡加速度
+        var tempox = (1 / 2 * 9.8 * Math.sin(gamma / 180 * 3.14)).toFixed(2);
+        var tempoy = (1 / 2 * 9.8 * Math.sin(beta / 180 * 3.14)).toFixed(2);
+        player.speed = new Vector(tempox, tempoy);
+    })(e)
+    
+    //玩家移动
+    player.act(function(step){
+        //设置最大时间间隔
+        var maxStep = 0.05;
+        while (step > 0) {
+            var thisStep = Math.min(step, maxStep);
+            //玩家移动
+            var tempos = player.pos.plus(player.speed.times(thisStep * 0.1));
+            if(tempos.x > 0)
                 tempos.x = tempos.x > 486 ? 486 :  tempos.x;
+            else
+                tempos.x = 0;
+            if(tempos.y > 0)
                 tempos.y = tempos.y > 486 ? 486 :  tempos.y;
-                this.player.pos = tempos;
-                var style = document.querySelector("#ball");
-                style.left = tempos.x;
-                style.top = tempos.y;
-                step -= thisStep;
-            }
-        });
-        //获取数据
-        function getData(e){
-            //取得轴转角
-            //大于0向下移动
-            var beta = e.beta > 90 ? 90 : e.beta;
-            var beta = e.beta < -90 ? -90 : e.beta;
-            //大于0向右移动
-            var gamma = e.gamma
-            //取得轴加速度
-            /*if(e.accelerationIncludingGravity){
-                //手机竖起，即向下加速度
-                beta = -e.accelerationIncludingGravity.y * 300
-                //手机右倾，即向右加速度
-                gamma = e.accelerationIncludingGravity.x * 300
-            }*/
-        
-            //根据现在的速度，确定玩家速度
-            var tempox = (gamma / 10).toFixed(2);
-            var tempoy = (beta / 10).toFixed(2);
-            this.player.speed = new Vector(tempox, tempoy);
-            alert("Hello");
-            alert(this.player.speed.y);
+            else
+                tempos.y = 0;
+            player.pos = tempos;
+            var drop = document.getElementById("ball");
+            var wall = document.getElementsByClassName("contain")[0];
+            drop.style.left = tempos.x.toFixed(0) + "px";
+            drop.style.top = tempos.y.toFixed(0) + "px";
+            step -= thisStep;
         }
+    });
 };
 
 //实例创建
