@@ -75,7 +75,7 @@ function oriListener(e) {
         //根据转角，确定玩家斜坡加速度
         var tempox = (1 / 2 * 9.8 * Math.sin(gamma / 180 * 3.14)).toFixed(2);
         var tempoy = (1 / 2 * 9.8 * Math.sin(beta / 180 * 3.14)).toFixed(2);
-        player.speed = new Vector(tempox, tempoy);
+        player.speed = player.speed.plus(new Vector(tempox, tempoy));
     })(e)
     
     //玩家移动
